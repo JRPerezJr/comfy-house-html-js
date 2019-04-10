@@ -1,5 +1,7 @@
 ## Comfy House
 
+A Javascript Project used for learning.
+
 ## Technologies & Libraries Utilized:
 
 HTML5, CSS3, and Javascript
