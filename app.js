@@ -1,3 +1,13 @@
+//Contentful
+const client = contentful.createClient({
+  // This is the space ID. A space is like a project folder in Contentful terms
+  space: "lktj1zulj72k",
+  // This is the access token for this space. Normally you get both ID and the token in the Contentful web app
+  accessToken:
+    "504097a4a63a69b41a022a18eb073f8a53d7a61f57375a67a20e395fe868901e"
+});
+//console.log("client :", client);
+
 //variables
 const cartBtn = document.querySelector(".cart-btn");
 const closeCartBtn = document.querySelector(".close-cart");
@@ -20,9 +30,16 @@ let buttonsDOM = [];
 class Products {
   async getProducts() {
     try {
-      let result = await fetch("products.json");
-      let data = await result.json();
-      let products = data.items;
+      let contentful = await client.getEntries({
+        content_type: "comfyHouseProducts"
+      });
+      console.log("contentful", contentful);
+
+      //   let result = await fetch("products.json");<--used for local data
+      //   let data = await result.json();
+      //   let products = data.items;
+
+      let products = contentful.items;
       products = products.map(item => {
         const { title, price } = item.fields;
         const { id } = item.sys;
@@ -52,7 +69,7 @@ class UI {
                     </button>
                 </div>
                 <h3>${product.title}</h3>
-                <h4>${product.price}</h4>
+                <h4>$${product.price}</h4>
             </article>
             <!-- end of single product -->
         `;
@@ -108,7 +125,7 @@ class UI {
     div.innerHTML = `<img src="${item.image}" alt="product">
                     <div>
                         <h4>${item.title}</h4>
-                        <h5>${item.price}</h5>
+                        <h5>$${item.price}</h5>
                         <span class="remove-item" data-id=${
                           item.id
                         }>remove</span>
