@@ -34,12 +34,13 @@ class Products {
         content_type: "comfyHouseProducts"
       });
       console.log("contentful", contentful);
+      let products = contentful.items;
 
       //   let result = await fetch("products.json");<--used for local data
       //   let data = await result.json();
       //   let products = data.items;
+      //   let products = data.items; <--used for local data end
 
-      let products = contentful.items;
       products = products.map(item => {
         const { title, price } = item.fields;
         const { id } = item.sys;
